@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using System.Collections.Generic;
+using CalculatorService.Server.WebAPI.Models;
 
 namespace CalculatorService.Server.WebAPI.FilterAttributes
 {
@@ -28,11 +30,11 @@ namespace CalculatorService.Server.WebAPI.FilterAttributes
                               .ToDictionary(k => k.Key,
                                     p => string.Join(" - ", p.Value!.Errors.Select(error => error.ErrorMessage)));
 
-
-        var response = new
+        var response = new ErrorDescriptionClass()
         {
-          Message = "Invalid request",
-          Errors = errorDictionary
+          ErrorCode = "InvalidRequest",
+          ErrorStatus = (int)HttpStatusCode.BadRequest,
+          ErrorMessage = "Unable to process request: " + string.Join(",", errorDictionary.Select(kv => kv.Value).ToArray())
         };
 
         context.Result = new ObjectResult(response)
