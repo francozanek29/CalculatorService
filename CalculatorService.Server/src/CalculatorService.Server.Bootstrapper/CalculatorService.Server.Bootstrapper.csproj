@@ -8,10 +8,12 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.5" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CalculatorServer.Server.Repository\CalculatorService.Server.Repository.csproj" />
     <ProjectReference Include="..\CalculatorService.Server.Core.Model\CalculatorService.Server.Core.Model.csproj" />
     <ProjectReference Include="..\CalculatorService.Server.Core.Services\CalculatorService.Server.Core.Services.csproj" />
   </ItemGroup>

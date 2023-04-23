@@ -1,5 +1,6 @@
 ﻿using CalculatorService.Server.Core.Model.Interfaces;
 using CalculatorService.Server.Core.Services;
+using CalculatorService.Server.Repository;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CalculatorService.Server.Bootstrapper
@@ -37,7 +38,7 @@ namespace CalculatorService.Server.Bootstrapper
 
     private static void ConfigureIntegrationServices(IServiceCollection services)
     {
-      
+      services.AddScoped<IRepository, JournalRepository>();
     }
   }
 }

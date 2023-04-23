@@ -11,18 +11,18 @@ namespace CalculatorService.Server.WebAPI.Controllers
   {
     private readonly ICalculatorService _calculatorService;
     private readonly IMapper _mapper;
-
+    
     public CalculatorController(ICalculatorService calculatorService, IMapper mapper)
     {
       _calculatorService = calculatorService;
       _mapper = mapper;
     }
 
-
     [HttpPost("add")]
-    public async Task<ActionResult<AddOperationResultModel>> AddElementsAsync([FromBody] AddOperationModel addends)
+    public async Task<ActionResult<AddOperationResultModel>> AddElementsAsync([FromBody] AddOperationModel addends,
+                                                                              [FromHeader(Name = "X-Evi-Tracking-Id")] string? trackingId)
     {
-      var addOperationResult = await _calculatorService.AddElementsAsync(_mapper.Map<AddOperationDTO>(addends));
+      var addOperationResult = await _calculatorService.AddElementsAsync(_mapper.Map<OperationDTOOperands>(addends),trackingId);
 
       return Ok(_mapper.Map<AddOperationResultModel>(addOperationResult));
     }
