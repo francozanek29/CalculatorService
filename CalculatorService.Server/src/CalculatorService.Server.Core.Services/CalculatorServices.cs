@@ -18,9 +18,15 @@ namespace CalculatorService.Server.Core.Services
     {
       return await ExecuteOperation(operators, trackingId, ValidOperations.Sum);
     }
+
     public async Task<OperationResultDTO> MultiplyElementsAsync(OperationDTOOperands factors, string trackingId)
     {
       return await ExecuteOperation(factors, trackingId, ValidOperations.Mult);
+    }
+
+    public async Task<OperationResultDTO> SubElementsAsync(OperationDTOOperands subsOperators, string trackingId)
+    {
+      return await ExecuteOperation(subsOperators, trackingId, ValidOperations.Diff);
     }
 
     private async Task<OperationResultDTO> ExecuteOperation(OperationDTOOperands operands, string trackingId, char operation)
@@ -63,9 +69,10 @@ namespace CalculatorService.Server.Core.Services
           return "Sum";
         case (ValidOperations.Mult):
           return "Mul";
+        case (ValidOperations.Diff):
+          return "Dif";
         default: return string.Empty;
       }
-
     }
   }
 }

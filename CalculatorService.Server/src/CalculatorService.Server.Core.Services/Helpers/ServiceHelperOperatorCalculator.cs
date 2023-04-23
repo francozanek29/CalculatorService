@@ -13,6 +13,7 @@ namespace CalculatorService.Server.Core.Services.Helpers
       {
         {ValidOperations.Sum,new OperationToBePerfomed(AddElements)},
         {ValidOperations.Mult,new OperationToBePerfomed(MultiplyElements)},
+        {ValidOperations.Diff,new OperationToBePerfomed(SubElements)}
       };
     }
 
@@ -41,6 +42,14 @@ namespace CalculatorService.Server.Core.Services.Helpers
       return new OperationResultDTO()
       {
         Result = operands.Operands.Aggregate((x, y) => x * y)
+      };
+    }
+
+    private OperationResultDTO SubElements(OperationDTOOperands operands)
+    {
+      return new OperationResultDTO()
+      {
+        Result = operands.Operands.Aggregate((x, y) => x - y)
       };
     }
 
