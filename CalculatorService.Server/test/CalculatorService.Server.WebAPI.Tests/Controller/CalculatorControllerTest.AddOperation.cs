@@ -93,9 +93,7 @@ namespace CalculatorService.Server.WebAPI.Tests.ControllerTests
 
       var httpResponse = await _testClient.HttpClient.PostAsync("/calculator/add", bodyToBeSend);
 
-      var ff = await httpResponse.Content.ReadAsStringAsync();
-
-      var response = JsonSerializer.Deserialize<ErrorDescriptionClass>(ff);
+      var response = JsonSerializer.Deserialize<ErrorDescriptionClass>(await httpResponse.Content.ReadAsStringAsync());
 
       //Assert
       using (new AssertionScope())

@@ -13,6 +13,7 @@ namespace CalculatorService.Server.WebAPI.Mappings
     {
       AddRuleForAddOperation();
       AddRulesForMultiplyOperation();
+      AddRulesForSubOperation();
     }
 
     /// <summary>
@@ -33,5 +34,14 @@ namespace CalculatorService.Server.WebAPI.Mappings
                    opt => opt.MapFrom(source => source.Factors));
       CreateMap<OperationResultDTO, MultiplyOperationResultModel>();
     }
+
+    private void AddRulesForSubOperation()
+    {
+      CreateMap<SubOperationModel, OperationDTOOperands>()
+        .ForMember(dest => dest.Operands,
+                   opt => opt.MapFrom(source => new List<int>() { source.Minuend.Value, source.Subtrahend.Value }));
+      CreateMap<OperationResultDTO, SubOperationResultModel>();
+    }
+
   }
 }

@@ -4,6 +4,7 @@
   {
     public const char
         Sum = '+',
-        Mult = '*';
+        Mult = '*',
+        Diff = '-';
   }
 }
