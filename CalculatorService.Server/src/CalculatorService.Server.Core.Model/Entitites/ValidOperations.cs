@@ -5,6 +5,7 @@
     public const char
         Sum = '+',
         Mult = '*',
-        Diff = '-';
+        Diff = '-',
+        Sqrt = 's';
   }
 }

@@ -29,6 +29,11 @@ namespace CalculatorService.Server.Core.Services
       return await ExecuteOperation(subsOperators, trackingId, ValidOperations.Diff);
     }
 
+    public async Task<OperationResultDTO> SqrtElementsAsync(OperationDTOOperands sqrtNumber, string trackingId)
+    {
+      return await ExecuteOperation(sqrtNumber, trackingId, ValidOperations.Sqrt);
+    }
+
     private async Task<OperationResultDTO> ExecuteOperation(OperationDTOOperands operands, string trackingId, char operation)
     {
       try
@@ -74,5 +79,7 @@ namespace CalculatorService.Server.Core.Services
         default: return string.Empty;
       }
     }
+
+   
   }
 }
