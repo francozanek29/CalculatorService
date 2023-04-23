@@ -11,7 +11,8 @@ namespace CalculatorService.Server.Core.Services.Helpers
     {
       _operationsToBePerfomed = new Dictionary<char, OperationToBePerfomed>()
       {
-        {ValidOperations.Sum,new OperationToBePerfomed(AddElements)}
+        {ValidOperations.Sum,new OperationToBePerfomed(AddElements)},
+        {ValidOperations.Mult,new OperationToBePerfomed(MultiplyElements)},
       };
     }
 
@@ -32,6 +33,14 @@ namespace CalculatorService.Server.Core.Services.Helpers
       return new OperationResultDTO()
       {
         Result = operands.Operands.Sum()
+      };
+    }
+
+    private OperationResultDTO MultiplyElements(OperationDTOOperands operands)
+    {
+      return new OperationResultDTO()
+      {
+        Result = operands.Operands.Aggregate((x, y) => x * y)
       };
     }
 

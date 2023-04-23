@@ -1,7 +1,6 @@
 ﻿using CalculatorService.Server.Core.Model.Entitites;
 using FluentAssertions;
 using FluentAssertions.Execution;
-using Microsoft.Net.Http.Headers;
 using Moq;
 using System.Diagnostics;
 using System.Net;
@@ -42,7 +41,7 @@ namespace CalculatorService.Server.WebAPI.Tests.ControllerTests
       using (new AssertionScope())
       {
         httpResponse.StatusCode.Should().Be(HttpStatusCode.OK);
-        response.Sum.Should().Be(expectedResult);
+        response.Result.Should().Be(expectedResult);
         //Validate the response no take more than 5 seconds to return the element.
         timer.ElapsedMilliseconds.Should().BeLessThanOrEqualTo(5000);
       }

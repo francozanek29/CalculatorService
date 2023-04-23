@@ -26,5 +26,15 @@ namespace CalculatorService.Server.WebAPI.Controllers
 
       return Ok(_mapper.Map<AddOperationResultModel>(addOperationResult));
     }
+
+
+    [HttpPost("mult")]
+    public async Task<ActionResult<MultiplyOperationResultModel>> MultiplyElementsAsync([FromBody] MultiplyOperationModel factors,
+                                                                              [FromHeader(Name = "X-Evi-Tracking-Id")] string? trackingId)
+    {
+      var multiplyOperationResult = await _calculatorService.MultiplyElementsAsync(_mapper.Map<OperationDTOOperands>(factors), trackingId);
+
+      return Ok(_mapper.Map<MultiplyOperationResultModel>(multiplyOperationResult));
+    }
   }
 }

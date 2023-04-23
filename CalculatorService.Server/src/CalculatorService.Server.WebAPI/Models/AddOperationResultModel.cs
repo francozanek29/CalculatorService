@@ -9,6 +9,6 @@ namespace CalculatorService.Server.WebAPI.Models
   public record AddOperationResultModel
   {
     [JsonPropertyName("Sum")]
-    public int Sum { get; set; }  
+    public int Result { get; set; }  
   }
 }

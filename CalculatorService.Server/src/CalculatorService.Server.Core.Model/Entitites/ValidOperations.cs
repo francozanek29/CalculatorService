@@ -3,6 +3,7 @@
   public static class ValidOperations
   {
     public const char
-        Sum = '+';
+        Sum = '+',
+        Mult = '*';
   }
 }
