@@ -12,8 +12,6 @@ namespace CalculatorService.Server.WebAPI.FilterAttributes
   /// </summary>
   public class HandledExceptionFilterAttribute : ExceptionFilterAttribute
   {
-    private readonly string ErrorMessage = "There was an error during the request try again.";
-
     public override void OnException(ExceptionContext context)
     {
       var response = new ErrorDescriptionClass()

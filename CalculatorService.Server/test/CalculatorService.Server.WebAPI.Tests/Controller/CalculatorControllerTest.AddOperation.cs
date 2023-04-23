@@ -1,5 +1,8 @@
-﻿using FluentAssertions;
+﻿using CalculatorService.Server.Core.Model.Entitites;
+using FluentAssertions;
 using FluentAssertions.Execution;
+using Microsoft.Net.Http.Headers;
+using Moq;
 using System.Diagnostics;
 using System.Net;
 
@@ -15,7 +18,7 @@ namespace CalculatorService.Server.WebAPI.Tests.ControllerTests
     /// <returns></returns>
     [Theory]
     [MemberData(nameof(Data))]
-    public async Task WhenAllTheDataIsOk_ReturnCorrectResult(List<int> elementsToBeAdded, int expectedResult)
+    public async Task AddElementsAsync_WhenAllTheDataIsOk_ReturnCorrectResult(List<int> elementsToBeAdded, int expectedResult)
     {
       //Arrange
       var addOperationModel = new AddOperationModel()
@@ -45,7 +48,67 @@ namespace CalculatorService.Server.WebAPI.Tests.ControllerTests
       }
     }
 
-    
+    [Fact]
+    public async Task AddElementsAsync_WhenTheDataIsNotOk_Returns400StatusCode()
+    {
+      //Arrange
+      var addOperationModel = new AddOperationModel()
+      {
+        Addends = new List<int>() { 1 }
+      };
+
+      StringContent bodyToBeSend = new(JsonSerializer.Serialize(addOperationModel), Encoding.UTF8, "application/json");
+
+      //Act
+      var httpResponse = await _testClient.HttpClient.PostAsync("/calculator/add", bodyToBeSend);
+
+      var response = JsonSerializer.Deserialize<ErrorDescriptionClass>(await httpResponse.Content.ReadAsStringAsync());
+
+      //Assert
+      using(new AssertionScope()) 
+      {
+        httpResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        response.ErrorCode.Should().Be("InvalidRequest");
+        response.ErrorStatus.Should().Be((int)HttpStatusCode.BadRequest);
+        response.ErrorMessage.Should().Be("Unable to process request: At least two elements should be provided");
+      }
+    }
+
+    [Fact]
+    public async Task AddElementsAsync_WhenSomeInternalIssueHappened_Returns500StatusCode()
+    {
+      //Arrange
+      var addOperationModel = new AddOperationModel()
+      {
+        Addends = new List<int>() { 1,2 }
+      };
+
+      StringContent bodyToBeSend = new(JsonSerializer.Serialize(addOperationModel), Encoding.UTF8, "application/json");
+
+      _testClient.HttpClient.DefaultRequestHeaders.Add(TrackingHeader, "X-Evi-Tracking-Id");
+
+      _testClient.DataSourceMocks
+                 .MockRepository
+                 .Setup(mr => mr.SaveOperationToRepositoryAsync(It.IsAny<OperationDTO>()))
+                 .ThrowsAsync(new Exception());
+
+      var httpResponse = await _testClient.HttpClient.PostAsync("/calculator/add", bodyToBeSend);
+
+      var ff = await httpResponse.Content.ReadAsStringAsync();
+
+      var response = JsonSerializer.Deserialize<ErrorDescriptionClass>(ff);
+
+      //Assert
+      using (new AssertionScope())
+      {
+        httpResponse.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
+        response.ErrorCode.Should().Be("InternalError");
+        response.ErrorStatus.Should().Be((int)HttpStatusCode.InternalServerError);
+        response.ErrorMessage.Should().Be("An unexpected error condition was triggered which made impossible to fulfill the request. Please try again or contact support");
+      }
+    }
+
+
     public static IEnumerable<object[]> Data()
     {
       yield return new object[] { new List<int> { -1, 3, -2 }, 0 };

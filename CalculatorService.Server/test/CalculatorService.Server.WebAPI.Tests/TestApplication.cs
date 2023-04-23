@@ -11,7 +11,7 @@ namespace CalculatorService.Server.WebAPI.Tests
 
     private static void WireExternalDataMocks(IServiceCollection services, TestApplicationDataSourceMocks testingMocks)
     {
-     
+      RegisterMock(testingMocks.MockRepository.Object);
 
       void RegisterMock<T>(T mock) where T : class
       {

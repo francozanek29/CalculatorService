@@ -6,6 +6,8 @@
 
     private (HttpClient HttpClient, TestApplicationDataSourceMocks DataSourceMocks) _testClient;
 
+    private const string TrackingHeader = "X-Evi-Tracking-Id";
+
     public CalculatorControllerTest(TestApplication testApplication)
     {
       _testApplication = testApplication;
