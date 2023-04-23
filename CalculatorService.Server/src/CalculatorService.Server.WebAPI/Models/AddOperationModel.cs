@@ -1,4 +1,5 @@
 ﻿using CalculatorService.Server.WebAPI.Validations;
+using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 namespace CalculatorService.Server.WebAPI.Models
@@ -11,6 +12,6 @@ namespace CalculatorService.Server.WebAPI.Models
   {
     [Required]
     [EnsureMinimumElementsAttribute(2, ErrorMessage = "At least two elements should be provided")]
-    public IEnumerable<int> Addends { get; set; } = new int[0];
+    public IEnumerable<int> Addends { get; set; } = new int[0];    
   }
 }

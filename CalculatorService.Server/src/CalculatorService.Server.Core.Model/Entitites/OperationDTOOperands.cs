@@ -5,8 +5,8 @@
   /// It receives the data from the 
   /// Controller and send the data to the repository and viceversa. 
   /// </summary>
-  public record AddOperationDTO
+  public record OperationDTOOperands
   {
-    public IEnumerable<int> Addends { get; set; }
+    public IEnumerable<int> Operands { get; set; }
   }
 }

@@ -19,8 +19,12 @@ namespace CalculatorService.Server.WebAPI.Mappings
     /// </summary>
     private void AddRuleForAddOperation()
     {
-      CreateMap<AddOperationModel, AddOperationDTO>();
-      CreateMap<AddOperationResultDTO, AddOperationResultModel>();
+      CreateMap<AddOperationModel, OperationDTOOperands>()
+        .ForMember(dest => dest.Operands,
+                   opt => opt.MapFrom(source => source.Addends));
+      CreateMap<OperationResultDTO, AddOperationResultModel>()
+         .ForMember(dest => dest.Sum,
+                   opt => opt.MapFrom(source => source.Result));
     }
   }
 }
