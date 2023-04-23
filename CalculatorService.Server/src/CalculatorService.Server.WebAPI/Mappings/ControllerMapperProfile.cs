@@ -12,6 +12,7 @@ namespace CalculatorService.Server.WebAPI.Mappings
     public ControllerMapperProfile()
     {
       AddRuleForAddOperation();
+      AddRulesForMultiplyOperation();
     }
 
     /// <summary>
@@ -22,9 +23,15 @@ namespace CalculatorService.Server.WebAPI.Mappings
       CreateMap<AddOperationModel, OperationDTOOperands>()
         .ForMember(dest => dest.Operands,
                    opt => opt.MapFrom(source => source.Addends));
-      CreateMap<OperationResultDTO, AddOperationResultModel>()
-         .ForMember(dest => dest.Sum,
-                   opt => opt.MapFrom(source => source.Result));
+      CreateMap<OperationResultDTO, AddOperationResultModel>();
+    }
+
+    private void AddRulesForMultiplyOperation()
+    {
+      CreateMap<MultiplyOperationModel, OperationDTOOperands>()
+        .ForMember(dest => dest.Operands,
+                   opt => opt.MapFrom(source => source.Factors));
+      CreateMap<OperationResultDTO, MultiplyOperationResultModel>();
     }
   }
 }

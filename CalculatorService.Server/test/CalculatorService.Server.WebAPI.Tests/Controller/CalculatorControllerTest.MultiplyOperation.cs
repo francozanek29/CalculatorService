@@ -16,27 +16,27 @@ namespace CalculatorService.Server.WebAPI.Tests.ControllerTests
     /// <param name="expectedResult"></param>
     /// <returns></returns>
     [Theory]
-    [MemberData(nameof(DataAdd))]
-    public async Task AddElementsAsync_WhenAllTheDataIsOk_ReturnCorrectResult(List<int> elementsToBeAdded, int expectedResult)
+    [MemberData(nameof(DataMultiply))]
+    public async Task MultiplyElementsAsync_WhenAllTheDataIsOk_ReturnCorrectResult(List<int> elementsToBeAdded, int expectedResult)
     {
       //Arrange
-      var addOperationModel = new AddOperationModel()
+      var multiplyOperationModel = new MultiplyOperationModel()
       {
-        Addends = elementsToBeAdded,
+        Factors = elementsToBeAdded,
       };
 
-      StringContent bodyToBeSend = new(JsonSerializer.Serialize(addOperationModel), Encoding.UTF8, "application/json");
+      StringContent bodyToBeSend = new(JsonSerializer.Serialize(multiplyOperationModel), Encoding.UTF8, "application/json");
 
       //Act
       var timer = new Stopwatch();
 
       timer.Start();
 
-      var httpResponse = await _testClient.HttpClient.PostAsync("/calculator/add", bodyToBeSend);
+      var httpResponse = await _testClient.HttpClient.PostAsync("/calculator/mult", bodyToBeSend);
 
       timer.Stop();
 
-      var response = JsonSerializer.Deserialize<AddOperationResultModel>(await httpResponse.Content.ReadAsStringAsync());
+      var response = JsonSerializer.Deserialize<MultiplyOperationResultModel>(await httpResponse.Content.ReadAsStringAsync());
 
       using (new AssertionScope())
       {
@@ -48,18 +48,18 @@ namespace CalculatorService.Server.WebAPI.Tests.ControllerTests
     }
 
     [Fact]
-    public async Task AddElementsAsync_WhenTheDataIsNotOk_Returns400StatusCode()
+    public async Task MultiplyElementsAsync_WhenTheDataIsNotOk_Returns400StatusCode()
     {
       //Arrange
-      var addOperationModel = new AddOperationModel()
+      var multiplyOperationModel = new MultiplyOperationModel()
       {
-        Addends = new List<int>() { 1 }
+        Factors = new List<int>() { 1 }
       };
 
-      StringContent bodyToBeSend = new(JsonSerializer.Serialize(addOperationModel), Encoding.UTF8, "application/json");
+      StringContent bodyToBeSend = new(JsonSerializer.Serialize(multiplyOperationModel), Encoding.UTF8, "application/json");
 
       //Act
-      var httpResponse = await _testClient.HttpClient.PostAsync("/calculator/add", bodyToBeSend);
+      var httpResponse = await _testClient.HttpClient.PostAsync("/calculator/mult", bodyToBeSend);
 
       var response = JsonSerializer.Deserialize<ErrorDescriptionClass>(await httpResponse.Content.ReadAsStringAsync());
 
@@ -74,15 +74,15 @@ namespace CalculatorService.Server.WebAPI.Tests.ControllerTests
     }
 
     [Fact]
-    public async Task AddElementsAsync_WhenSomeInternalIssueHappened_Returns500StatusCode()
+    public async Task MultiplyElementsAsync_WhenSomeInternalIssueHappened_Returns500StatusCode()
     {
       //Arrange
-      var addOperationModel = new AddOperationModel()
+      var multiplyOperationModel = new MultiplyOperationModel()
       {
-        Addends = new List<int>() { 1,2 }
+        Factors = new List<int>() { 1,2 }
       };
 
-      StringContent bodyToBeSend = new(JsonSerializer.Serialize(addOperationModel), Encoding.UTF8, "application/json");
+      StringContent bodyToBeSend = new(JsonSerializer.Serialize(multiplyOperationModel), Encoding.UTF8, "application/json");
 
       _testClient.HttpClient.DefaultRequestHeaders.Add(TrackingHeader, "X-Evi-Tracking-Id");
 
@@ -91,7 +91,7 @@ namespace CalculatorService.Server.WebAPI.Tests.ControllerTests
                  .Setup(mr => mr.SaveOperationToRepositoryAsync(It.IsAny<OperationDTO>()))
                  .ThrowsAsync(new Exception());
 
-      var httpResponse = await _testClient.HttpClient.PostAsync("/calculator/add", bodyToBeSend);
+      var httpResponse = await _testClient.HttpClient.PostAsync("/calculator/mult", bodyToBeSend);
 
       var ff = await httpResponse.Content.ReadAsStringAsync();
 
@@ -108,11 +108,11 @@ namespace CalculatorService.Server.WebAPI.Tests.ControllerTests
     }
 
 
-    public static IEnumerable<object[]> DataAdd()
+    public static IEnumerable<object[]> DataMultiply()
     {
-      yield return new object[] { new List<int> { -1, 3, -2 }, 0 };
-      yield return new object[] { new List<int> { 1, 5, 7 }, 13 };
-      yield return new object[] { new List<int> { 4, 5 }, 9 };
+      yield return new object[] { new List<int> { -1, 3, -2 }, 6 };
+      yield return new object[] { new List<int> { -1, 5, 7 }, -35 };
+      yield return new object[] { new List<int> { 0, 5000000 }, 0 };
     }
   }
 }

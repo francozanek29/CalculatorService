@@ -11,12 +11,16 @@ namespace CalculatorService.Server.Core.Services
 
     public CalculatorServices(IRepository repository)
     {
-      _journalRepository = repository;    
+      _journalRepository = repository;
     }
 
-    public async Task<OperationResultDTO> AddElementsAsync(OperationDTOOperands addOperationDTO, string trackingId)
+    public async Task<OperationResultDTO> AddElementsAsync(OperationDTOOperands operators, string trackingId)
     {
-      return await ExecuteOperation(addOperationDTO, trackingId, ValidOperations.Sum);
+      return await ExecuteOperation(operators, trackingId, ValidOperations.Sum);
+    }
+    public async Task<OperationResultDTO> MultiplyElementsAsync(OperationDTOOperands factors, string trackingId)
+    {
+      return await ExecuteOperation(factors, trackingId, ValidOperations.Mult);
     }
 
     private async Task<OperationResultDTO> ExecuteOperation(OperationDTOOperands operands, string trackingId, char operation)
@@ -34,7 +38,7 @@ namespace CalculatorService.Server.Core.Services
 
         return calculationResult;
       }
-      catch 
+      catch
       {
         throw;
       }
@@ -57,7 +61,8 @@ namespace CalculatorService.Server.Core.Services
       {
         case (ValidOperations.Sum):
           return "Sum";
-
+        case (ValidOperations.Mult):
+          return "Mul";
         default: return string.Empty;
       }
 

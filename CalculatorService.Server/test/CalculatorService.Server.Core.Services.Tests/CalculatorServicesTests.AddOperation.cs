@@ -1,19 +1,7 @@
-using CalculatorService.Server.Core.Model.Interfaces;
-using FluentAssertions.Execution;
-using Moq;
-
 namespace CalculatorService.Server.Core.Services.Tests
 {
-  public class CalculatoServicesTests
+  public partial class CalculatorServicesTests
   {
-    private readonly CalculatorServices _sut;
-    private readonly Mock<IRepository> _mockRepository = new();
-
-    public CalculatoServicesTests()
-    {
-      _sut = new(_mockRepository.Object);
-    }
-
     /// <summary>
     /// Test cases: When the elements to be added are sent, the result is correct, and not tracking Id is sent,
     /// the repository is not being called.
@@ -22,7 +10,7 @@ namespace CalculatorService.Server.Core.Services.Tests
     /// <param name="expectedResult"></param>
     /// <returns></returns>
     [Theory]
-    [MemberData(nameof(Data))]
+    [MemberData(nameof(DataAdd))]
     public async Task AddElementsAsync_WhenElementsAreSentAndNotTrackingIdISent_ReturnsSum(List<int> elementsToBeAdded, int expectedResult)
     {
       //Arrange
@@ -66,7 +54,7 @@ namespace CalculatorService.Server.Core.Services.Tests
         Times.Once);
     }
 
-    public static IEnumerable<object[]> Data()
+    public static IEnumerable<object[]> DataAdd()
     {
       yield return new object[] { new List<int> { -1, 3, -2 }, 0 };
       yield return new object[] { new List<int> { 1, 5, 7 }, 13 };
