@@ -2,8 +2,16 @@
 
 namespace CalculatorService.Server.WebAPI.Validations
 {
-    public class NotZeroAttribute : ValidationAttribute
+  public class NotZeroAttribute : ValidationAttribute
+  {
+    public override bool IsValid(object value)
     {
-        public override bool IsValid(object value) => (int)value != 0;
+      if(value != null)
+      {
+        return (int)value != 0;
+      }
+
+      return true;
     }
+  }
 }
