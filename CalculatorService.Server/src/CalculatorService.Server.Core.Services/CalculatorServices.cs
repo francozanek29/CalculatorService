@@ -29,6 +29,13 @@ namespace CalculatorService.Server.Core.Services
       return await ExecuteOperation(subsOperators, trackingId, ValidOperations.Diff);
     }
 
+    public async Task<OperationResultDTO> SqrtElementsAsync(OperationDTOOperands sqrtNumber, string trackingId)
+    {
+      return await ExecuteOperation(sqrtNumber, trackingId, ValidOperations.Sqrt);
+    }
+
+
+
     private async Task<OperationResultDTO> ExecuteOperation(OperationDTOOperands operands, string trackingId, char operation)
     {
       try
@@ -57,7 +64,9 @@ namespace CalculatorService.Server.Core.Services
         Date = DateTime.UtcNow.ToString("o"),
         TrackingId = trackingId,
         Operation = GetOperatioName(operation),
-        Calculation = string.Join(operation, operators) + "=" + result
+        Calculation = operators.Count() > 1 ?
+                    string.Join(operation, operators) + "=" + result:
+                    $"sqrt({operators.ElementAt(0)})={result}"
       };
     }
 
@@ -70,9 +79,13 @@ namespace CalculatorService.Server.Core.Services
         case (ValidOperations.Mult):
           return "Mul";
         case (ValidOperations.Diff):
-          return "Dif";
+          return "Dif"; 
+        case (ValidOperations.Sqrt):
+          return "Sqr";
         default: return string.Empty;
       }
     }
+
+   
   }
 }

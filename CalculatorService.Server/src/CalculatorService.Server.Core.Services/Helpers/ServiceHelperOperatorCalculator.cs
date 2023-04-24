@@ -13,7 +13,8 @@ namespace CalculatorService.Server.Core.Services.Helpers
       {
         {ValidOperations.Sum,new OperationToBePerfomed(AddElements)},
         {ValidOperations.Mult,new OperationToBePerfomed(MultiplyElements)},
-        {ValidOperations.Diff,new OperationToBePerfomed(SubElements)}
+        {ValidOperations.Diff,new OperationToBePerfomed(SubElements)},
+        {ValidOperations.Sqrt,new OperationToBePerfomed(SqrtElements)},
       };
     }
 
@@ -50,6 +51,14 @@ namespace CalculatorService.Server.Core.Services.Helpers
       return new OperationResultDTO()
       {
         Result = operands.Operands.Aggregate((x, y) => x - y)
+      };
+    } 
+    
+    private OperationResultDTO SqrtElements(OperationDTOOperands operands)
+    {
+      return new OperationResultDTO()
+      {
+        Result = (int)Math.Sqrt(operands.Operands.ElementAt(0))
       };
     }
 

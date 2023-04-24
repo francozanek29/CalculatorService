@@ -45,5 +45,14 @@ namespace CalculatorService.Server.WebAPI.Controllers
 
       return Ok(_mapper.Map<SubOperationResultModel>(subOperationResult));
     }
+
+    [HttpPost("sqrt")]
+    public async Task<ActionResult<SqrtOperationResultModel>> SqrtElementsAsync([FromBody] SqrtOperationModel sqrtOperators,
+                                                                                [FromHeader(Name = "X-Evi-Tracking-Id")] string? trackingId)
+    {
+      var sqrtOperationResult = await _calculatorService.SqrtElementsAsync(_mapper.Map<OperationDTOOperands>(sqrtOperators), trackingId);
+
+      return Ok(_mapper.Map<SqrtOperationResultModel>(sqrtOperationResult));
+    }
   }
 }
