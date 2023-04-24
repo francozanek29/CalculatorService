@@ -19,8 +19,10 @@ namespace CalculatorService.Server.Core.Services.Tests
         Operands = elementsToBeDivided
       };
 
+      _sut = new CalculatorServices(_mockRepository.Object, _requestContextForNoTracking);
+
       //Act 
-      var divOperationResult = (OperationResultDTOExtension) await _sut.DivElementsAsync(divOperationDto, string.Empty);
+      var divOperationResult = (OperationResultDTOExtension) await _sut.DivElementsAsync(divOperationDto);
 
       //Assert
       using (new AssertionScope())
@@ -44,14 +46,14 @@ namespace CalculatorService.Server.Core.Services.Tests
         Operands = new List<int>() { 2, 3 }
       };
 
-      var trackingId = "someTrackingId";
+      _sut = new CalculatorServices(_mockRepository.Object, _requestContextForTracking);
 
       //Act 
-      var addOperationResult = await _sut.DivElementsAsync(divOperationDto, trackingId);
+      var addOperationResult = await _sut.DivElementsAsync(divOperationDto);
 
       //Assert
       _mockRepository.Verify(mr => mr.SaveOperationToRepositoryAsync(
-        It.Is<OperationDTO>(x => x.Calculation == "2/3=0-Remainder=2" && x.Operation == "Div" && x.TrackingId == trackingId)),
+        It.Is<OperationDTO>(x => x.Calculation == "2/3=0-Remainder=2" && x.Operation == "Div" && x.TrackingId == _requestContextForTracking.TrackingId)),
         Times.Once);
     }
 

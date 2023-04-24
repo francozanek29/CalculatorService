@@ -14,18 +14,20 @@
     public async Task MultiplyElementsAsync_WhenElementsAreSentAndNotTrackingIdISent_ReturnsSum(List<int> elementsToBeMultiplied, int expectedResult)
     {
       //Arrange
-      var addOperationDto = new OperationDTOOperands()
+      var multiplyOperationDto = new OperationDTOOperands()
       {
         Operands = elementsToBeMultiplied
       };
 
+      _sut = new CalculatorServices(_mockRepository.Object, _requestContextForNoTracking);
+
       //Act 
-      var addOperationResult = await _sut.MultiplyElementsAsync(addOperationDto, string.Empty);
+      var multiplyOperationResult = await _sut.MultiplyElementsAsync(multiplyOperationDto);
 
       //Assert
       using (new AssertionScope())
       {
-        addOperationResult.Result.Should().Be(expectedResult);
+        multiplyOperationResult.Result.Should().Be(expectedResult);
         _mockRepository.Verify(mr => mr.SaveOperationToRepositoryAsync(It.IsAny<OperationDTO>()), Times.Never);
       }
     }
@@ -43,14 +45,14 @@
         Operands = new List<int>() { 2, 3 }
       };
 
-      var trackingId = "someTrackingId";
+      _sut = new CalculatorServices(_mockRepository.Object, _requestContextForTracking);
 
       //Act 
-      var addOperationResult = await _sut.MultiplyElementsAsync(multiplyOperationDto, trackingId);
+      var addOperationResult = await _sut.MultiplyElementsAsync(multiplyOperationDto);
 
       //Assert
       _mockRepository.Verify(mr => mr.SaveOperationToRepositoryAsync(
-        It.Is<OperationDTO>(x => x.Calculation == "2*3=6" && x.Operation == "Mul" && x.TrackingId == trackingId)),
+        It.Is<OperationDTO>(x => x.Calculation == "2*3=6" && x.Operation == "Mul" && x.TrackingId == _requestContextForTracking.TrackingId)),
         Times.Once);
     }
 

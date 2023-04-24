@@ -19,8 +19,10 @@ namespace CalculatorService.Server.Core.Services.Tests
         Operands = elementsToBeSubed
       };
 
+      _sut = new CalculatorServices(_mockRepository.Object, _requestContextForNoTracking);
+
       //Act 
-      var addOperationResult = await _sut.SubElementsAsync(subOperationDto, string.Empty);
+      var addOperationResult = await _sut.SubElementsAsync(subOperationDto);
 
       //Assert
       using (new AssertionScope())
@@ -43,14 +45,14 @@ namespace CalculatorService.Server.Core.Services.Tests
         Operands = new List<int>() { 2, 3 }
       };
 
-      var trackingId = "someTrackingId";
+      _sut = new CalculatorServices(_mockRepository.Object, _requestContextForTracking);
 
       //Act 
-      var addOperationResult = await _sut.SubElementsAsync(addOperationDto, trackingId);
+      var addOperationResult = await _sut.SubElementsAsync(addOperationDto);
 
       //Assert
       _mockRepository.Verify(mr => mr.SaveOperationToRepositoryAsync(
-        It.Is<OperationDTO>(x => x.Calculation == "2-3=-1" && x.Operation == "Dif" && x.TrackingId == trackingId)),
+        It.Is<OperationDTO>(x => x.Calculation == "2-3=-1" && x.Operation == "Dif" && x.TrackingId == _requestContextForTracking.TrackingId)),
         Times.Once);
     }
 
