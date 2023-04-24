@@ -1,4 +1,5 @@
-﻿using CalculatorService.Server.Core.Model.Interfaces;
+﻿using CalculatorService.Server.Core.Model.Entitites;
+using CalculatorService.Server.Core.Model.Interfaces;
 using CalculatorService.Server.Core.Services;
 using CalculatorService.Server.Repository;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,6 +28,7 @@ namespace CalculatorService.Server.Bootstrapper
     private static void ConfigureDomainServices(IServiceCollection services)
     {
       services.AddScoped<ICalculatorService, CalculatorServices>();
+      services.AddScoped<RequestContext>();
     }
 
     /// <summary>

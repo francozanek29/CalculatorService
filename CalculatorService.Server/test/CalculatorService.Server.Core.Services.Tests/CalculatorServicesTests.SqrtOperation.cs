@@ -10,7 +10,7 @@ namespace CalculatorService.Server.Core.Services.Tests
     /// <param name="expectedResult"></param>
     /// <returns></returns>
     [Theory]
-    [MemberData(nameof(DataAdd))]
+    [MemberData(nameof(DataSqrt))]
     public async Task SqrtElementsAsync_WhenElementsAreSentAndNotTrackingIdISent_ReturnsSum(List<int> elementsToBeAdded, int expectedResult)
     {
       //Arrange
@@ -19,8 +19,10 @@ namespace CalculatorService.Server.Core.Services.Tests
         Operands = elementsToBeAdded
       };
 
+      _sut = new CalculatorServices(_mockRepository.Object, _requestContextForNoTracking);
+
       //Act 
-      var addOperationResult = await _sut.AddElementsAsync(addOperationDto, string.Empty);
+      var addOperationResult = await _sut.SqrtElementsAsync(addOperationDto);
 
       //Assert
       using (new AssertionScope())
@@ -43,14 +45,14 @@ namespace CalculatorService.Server.Core.Services.Tests
         Operands = new List<int>() { 4 }
       };
 
-      var trackingId = "someTrackingId";
+      _sut = new CalculatorServices(_mockRepository.Object, _requestContextForTracking);
 
       //Act 
-      var addOperationResult = await _sut.SqrtElementsAsync(addOperationDto, trackingId);
+      var addOperationResult = await _sut.SqrtElementsAsync(addOperationDto);
 
       //Assert
       _mockRepository.Verify(mr => mr.SaveOperationToRepositoryAsync(
-        It.Is<OperationDTO>(x => x.Calculation == "sqrt(4)=2" && x.Operation == "Sqr" && x.TrackingId == trackingId)),
+        It.Is<OperationDTO>(x => x.Calculation == "sqrt(4)=2" && x.Operation == "Sqr" && x.TrackingId == _requestContextForTracking.TrackingId)),
         Times.Once);
     }
 

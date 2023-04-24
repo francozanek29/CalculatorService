@@ -2,12 +2,19 @@
 {
   public partial class CalculatorServicesTests
   {
-    private readonly CalculatorServices _sut;
+    private CalculatorServices _sut;
     private readonly Mock<IRepository> _mockRepository = new();
+    private readonly RequestContext _requestContextForTracking;
+    private readonly RequestContext _requestContextForNoTracking;
 
     public CalculatorServicesTests()
     {
-      _sut = new(_mockRepository.Object);
+      _requestContextForTracking = new()
+      {
+        TrackingId = "someTrackingId"
+      };
+
+      _requestContextForNoTracking = new();
     }
   }
 }

@@ -13,14 +13,14 @@ namespace CalculatorService.Server.Core.Model.Interfaces
     /// </summary>
     /// <param name="addOperationDTO">An object which contains the elements to be added</param>
     /// <returns>An object with the result to be shown in the body</returns>
-    Task<OperationResultDTO> AddElementsAsync(OperationDTOOperands operators, string trackingId);
+    Task<OperationResultDTO> AddElementsAsync(OperationDTOOperands operators);
 
-    Task<OperationResultDTO> MultiplyElementsAsync(OperationDTOOperands operators, string trackingId);
+    Task<OperationResultDTO> MultiplyElementsAsync(OperationDTOOperands operators);
 
-    Task<OperationResultDTO> SubElementsAsync(OperationDTOOperands operators, string trackingId);
+    Task<OperationResultDTO> SubElementsAsync(OperationDTOOperands operators);
 
-    Task<OperationResultDTO> SqrtElementsAsync(OperationDTOOperands operators, string trackingId);
+    Task<OperationResultDTO> SqrtElementsAsync(OperationDTOOperands operators);
 
-    Task<OperationResultDTO> DivElementsAsync(OperationDTOOperands operators, string trackingId);
+    Task<OperationResultDTO> DivElementsAsync(OperationDTOOperands operators);
   }
 }
