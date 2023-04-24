@@ -34,6 +34,10 @@ namespace CalculatorService.Server.Core.Services
       return await ExecuteOperation(sqrtNumber, trackingId, ValidOperations.Sqrt);
     }
 
+    public async Task<OperationResultDTO> DivElementsAsync(OperationDTOOperands operators, string trackingId)
+    {
+      return await ExecuteOperation(operators, trackingId, ValidOperations.Div);
+    }
 
 
     private async Task<OperationResultDTO> ExecuteOperation(OperationDTOOperands operands, string trackingId, char operation)
@@ -82,10 +86,10 @@ namespace CalculatorService.Server.Core.Services
           return "Dif"; 
         case (ValidOperations.Sqrt):
           return "Sqr";
+        case (ValidOperations.Div):
+          return "Div";
         default: return string.Empty;
       }
     }
-
-   
   }
 }

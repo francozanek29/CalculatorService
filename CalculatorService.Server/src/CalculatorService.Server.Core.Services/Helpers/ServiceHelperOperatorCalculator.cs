@@ -11,10 +11,11 @@ namespace CalculatorService.Server.Core.Services.Helpers
     {
       _operationsToBePerfomed = new Dictionary<char, OperationToBePerfomed>()
       {
-        {ValidOperations.Sum,new OperationToBePerfomed(AddElements)},
+        {ValidOperations.Sum, new OperationToBePerfomed(AddElements)},
         {ValidOperations.Mult,new OperationToBePerfomed(MultiplyElements)},
         {ValidOperations.Diff,new OperationToBePerfomed(SubElements)},
         {ValidOperations.Sqrt,new OperationToBePerfomed(SqrtElements)},
+        {ValidOperations.Div, new OperationToBePerfomed(DivElements)},
       };
     }
 
@@ -52,13 +53,22 @@ namespace CalculatorService.Server.Core.Services.Helpers
       {
         Result = operands.Operands.Aggregate((x, y) => x - y)
       };
-    } 
-    
+    }
+
     private OperationResultDTO SqrtElements(OperationDTOOperands operands)
     {
       return new OperationResultDTO()
       {
         Result = (int)Math.Sqrt(operands.Operands.ElementAt(0))
+      };
+    }
+
+    private OperationResultDTOExtension DivElements(OperationDTOOperands operands)
+    {
+      return new OperationResultDTOExtension()
+      {
+        Result = operands.Operands.Aggregate((x, y) => x / y),
+        ExtraResult = operands.Operands.Aggregate((x, y) => x % y)
       };
     }
 

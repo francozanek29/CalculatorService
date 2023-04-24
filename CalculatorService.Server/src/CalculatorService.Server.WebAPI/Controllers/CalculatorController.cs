@@ -56,12 +56,12 @@ namespace CalculatorService.Server.WebAPI.Controllers
     }
 
     [HttpPost("div")]
-    public async Task<ActionResult<DivOperationModel>> DivElementsAsync([FromBody] DivOperationModel sqrtOperators,
+    public async Task<ActionResult<DivOperationResultModel>> DivElementsAsync([FromBody] DivOperationModel sqrtOperators,
                                                                                 [FromHeader(Name = "X-Evi-Tracking-Id")] string? trackingId)
     {
-      var sqrtOperationResult = await _calculatorService.SqrtElementsAsync(_mapper.Map<OperationDTOOperands>(sqrtOperators), trackingId);
+      var divOperationResult = await _calculatorService.DivElementsAsync(_mapper.Map<OperationDTOOperands>(sqrtOperators), trackingId);
 
-      return Ok(_mapper.Map<DivOperationModel>(sqrtOperationResult));
+      return Ok(_mapper.Map<DivOperationResultModel>(divOperationResult));
     }
   }
 }

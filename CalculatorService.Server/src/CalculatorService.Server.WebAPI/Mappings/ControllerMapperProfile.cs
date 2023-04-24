@@ -49,8 +49,16 @@ namespace CalculatorService.Server.WebAPI.Mappings
     {
       CreateMap<DivOperationModel, OperationDTOOperands>()
         .ForMember(dest => dest.Operands,
-                   opt => opt.MapFrom(source => new List<int>() { source.Divisor!.Value, source.Divisor.Value }));
-      CreateMap<OperationResultDTO, SubOperationResultModel>();
+                   opt => opt.MapFrom(source => new List<int>() { source.Dividend!.Value, source.Divisor!.Value }));
+
+      CreateMap<OperationResultDTO, DivOperationResultModel>()
+        .ForMember(dest => dest.Remainder, 
+                   opt => opt.Ignore());
+
+      CreateMap<OperationResultDTOExtension, DivOperationResultModel>()
+           .IncludeBase<OperationResultDTO, DivOperationResultModel>()
+           .ForMember(dest => dest.Remainder,
+                      opt => opt.MapFrom(source => source.ExtraResult));
     }
 
     private void AddRulesForSqrtOperation()
