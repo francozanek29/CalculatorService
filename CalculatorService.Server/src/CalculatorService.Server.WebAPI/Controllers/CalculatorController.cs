@@ -19,47 +19,42 @@ namespace CalculatorService.Server.WebAPI.Controllers
     }
 
     [HttpPost("add")]
-    public async Task<ActionResult<AddOperationResultModel>> AddElementsAsync([FromBody] AddOperationModel addends,
-                                                                              [FromHeader(Name = "X-Evi-Tracking-Id")] string? trackingId)
+    public async Task<ActionResult<AddOperationResultModel>> AddElementsAsync([FromBody] AddOperationModel addends)
     {
-      var addOperationResult = await _calculatorService.AddElementsAsync(_mapper.Map<OperationDTOOperands>(addends),trackingId);
+      var addOperationResult = await _calculatorService.AddElementsAsync(_mapper.Map<OperationDTOOperands>(addends));
 
       return Ok(_mapper.Map<AddOperationResultModel>(addOperationResult));
     }
 
 
     [HttpPost("mult")]
-    public async Task<ActionResult<MultiplyOperationResultModel>> MultiplyElementsAsync([FromBody] MultiplyOperationModel factors,
-                                                                              [FromHeader(Name = "X-Evi-Tracking-Id")] string? trackingId)
+    public async Task<ActionResult<MultiplyOperationResultModel>> MultiplyElementsAsync([FromBody] MultiplyOperationModel factors)
     {
-      var multiplyOperationResult = await _calculatorService.MultiplyElementsAsync(_mapper.Map<OperationDTOOperands>(factors), trackingId);
+      var multiplyOperationResult = await _calculatorService.MultiplyElementsAsync(_mapper.Map<OperationDTOOperands>(factors));
 
       return Ok(_mapper.Map<MultiplyOperationResultModel>(multiplyOperationResult));
     }
 
     [HttpPost("sub")]
-    public async Task<ActionResult<SubOperationResultModel>> SubElementsAsync([FromBody] SubOperationModel subOperators,
-                                                                              [FromHeader(Name = "X-Evi-Tracking-Id")] string? trackingId)
+    public async Task<ActionResult<SubOperationResultModel>> SubElementsAsync([FromBody] SubOperationModel subOperators)
     {
-      var subOperationResult = await _calculatorService.SubElementsAsync(_mapper.Map<OperationDTOOperands>(subOperators), trackingId);
+      var subOperationResult = await _calculatorService.SubElementsAsync(_mapper.Map<OperationDTOOperands>(subOperators));
 
       return Ok(_mapper.Map<SubOperationResultModel>(subOperationResult));
     }
 
     [HttpPost("sqrt")]
-    public async Task<ActionResult<SqrtOperationResultModel>> SqrtElementsAsync([FromBody] SqrtOperationModel sqrtOperators,
-                                                                                [FromHeader(Name = "X-Evi-Tracking-Id")] string? trackingId)
+    public async Task<ActionResult<SqrtOperationResultModel>> SqrtElementsAsync([FromBody] SqrtOperationModel sqrtOperators)
     {
-      var sqrtOperationResult = await _calculatorService.SqrtElementsAsync(_mapper.Map<OperationDTOOperands>(sqrtOperators), trackingId);
+      var sqrtOperationResult = await _calculatorService.SqrtElementsAsync(_mapper.Map<OperationDTOOperands>(sqrtOperators));
 
       return Ok(_mapper.Map<SqrtOperationResultModel>(sqrtOperationResult));
     }
 
     [HttpPost("div")]
-    public async Task<ActionResult<DivOperationResultModel>> DivElementsAsync([FromBody] DivOperationModel sqrtOperators,
-                                                                                [FromHeader(Name = "X-Evi-Tracking-Id")] string? trackingId)
+    public async Task<ActionResult<DivOperationResultModel>> DivElementsAsync([FromBody] DivOperationModel sqrtOperators)
     {
-      var divOperationResult = await _calculatorService.DivElementsAsync(_mapper.Map<OperationDTOOperands>(sqrtOperators), trackingId);
+      var divOperationResult = await _calculatorService.DivElementsAsync(_mapper.Map<OperationDTOOperands>(sqrtOperators));
 
       return Ok(_mapper.Map<DivOperationResultModel>(divOperationResult));
     }

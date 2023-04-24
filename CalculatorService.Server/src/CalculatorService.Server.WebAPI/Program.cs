@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers(options =>
 {
+  options.Filters.Add<LoadRequestContextActionFilterAttribute>();
   options.Filters.Add<ValidationFilterAttribute>();
   options.Filters.Add<HandledExceptionFilterAttribute>();
 });
