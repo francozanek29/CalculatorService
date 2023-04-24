@@ -8,6 +8,7 @@ namespace CalculatorService.Server.Core.Services
   {
     private readonly IRepository _journalRepository;
     private readonly ServiceHelperOperatorCalculator _serviceHelperCalculatorOperator = new();
+    private readonly ServiceHelperOperatorCalculationStringGenerator _serviceHelperOperatorCalculationStringGenerator = new();
 
     public CalculatorServices(IRepository repository)
     {
@@ -34,7 +35,10 @@ namespace CalculatorService.Server.Core.Services
       return await ExecuteOperation(sqrtNumber, trackingId, ValidOperations.Sqrt);
     }
 
-
+    public async Task<OperationResultDTO> DivElementsAsync(OperationDTOOperands operators, string trackingId)
+    {
+      return await ExecuteOperation(operators, trackingId, ValidOperations.Div);
+    }
 
     private async Task<OperationResultDTO> ExecuteOperation(OperationDTOOperands operands, string trackingId, char operation)
     {
@@ -44,7 +48,7 @@ namespace CalculatorService.Server.Core.Services
 
         if (!string.IsNullOrEmpty(trackingId))
         {
-          var dto = GetOperationDTO(operation, trackingId, calculationResult.Result, operands.Operands);
+          var dto = GetOperationDTO(operation, trackingId, calculationResult, operands);
 
           await _journalRepository.SaveOperationToRepositoryAsync(dto);
         }
@@ -57,16 +61,14 @@ namespace CalculatorService.Server.Core.Services
       }
     }
 
-    private OperationDTO GetOperationDTO(char operation, string trackingId, int result, IEnumerable<int> operators)
+    private OperationDTO GetOperationDTO(char operation, string trackingId, OperationResultDTO result, OperationDTOOperands operators)
     {
       return new OperationDTO()
       {
         Date = DateTime.UtcNow.ToString("o"),
         TrackingId = trackingId,
         Operation = GetOperatioName(operation),
-        Calculation = operators.Count() > 1 ?
-                    string.Join(operation, operators) + "=" + result:
-                    $"sqrt({operators.ElementAt(0)})={result}"
+        Calculation = _serviceHelperOperatorCalculationStringGenerator.PerformOperation(operators, operation, result)
       };
     }
 
@@ -79,13 +81,13 @@ namespace CalculatorService.Server.Core.Services
         case (ValidOperations.Mult):
           return "Mul";
         case (ValidOperations.Diff):
-          return "Dif"; 
+          return "Dif";
         case (ValidOperations.Sqrt):
           return "Sqr";
+        case (ValidOperations.Div):
+          return "Div";
         default: return string.Empty;
       }
     }
-
-   
   }
 }

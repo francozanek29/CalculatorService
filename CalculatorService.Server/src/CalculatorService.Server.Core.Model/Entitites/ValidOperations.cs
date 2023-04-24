@@ -6,6 +6,7 @@
         Sum = '+',
         Mult = '*',
         Diff = '-',
-        Sqrt = 's';
+        Sqrt = 's',
+        Div = '/';
   }
 }

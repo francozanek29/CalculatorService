@@ -20,5 +20,7 @@ namespace CalculatorService.Server.Core.Model.Interfaces
     Task<OperationResultDTO> SubElementsAsync(OperationDTOOperands operators, string trackingId);
 
     Task<OperationResultDTO> SqrtElementsAsync(OperationDTOOperands operators, string trackingId);
+
+    Task<OperationResultDTO> DivElementsAsync(OperationDTOOperands operators, string trackingId);
   }
 }
