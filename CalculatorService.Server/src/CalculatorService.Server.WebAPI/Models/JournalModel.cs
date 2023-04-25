@@ -10,7 +10,6 @@ namespace CalculatorService.Server.WebAPI.Models
   public record JournalModel
   {
     [Required]
-    [MinLength(1)]
     [JsonPropertyName("Id")]
     public string TrackingId { get; set; }
   }
