@@ -28,6 +28,7 @@ namespace CalculatorService.Server.Bootstrapper
     private static void ConfigureDomainServices(IServiceCollection services)
     {
       services.AddScoped<ICalculatorService, CalculatorServices>();
+      services.AddScoped<IJournalService, JornalService>();
       services.AddScoped<RequestContext>();
     }
 
