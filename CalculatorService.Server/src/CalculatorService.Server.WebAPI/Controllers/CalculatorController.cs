@@ -29,7 +29,7 @@ namespace CalculatorService.Server.WebAPI.Controllers
         [HttpPost("add")]
         public async Task<ActionResult<AddOperationResultModel>> AddElementsAsync([FromBody] AddOperationModel addends)
         {
-            var addOperationResult = await _calculatorService.AddElementsAsync(_mapper.Map<OperationDTOOperands>(addends));
+            var addOperationResult = await _calculatorService.ExecuteOperation(_mapper.Map<OperationDTOOperands>(addends),ValidOperations.Sum);
 
             return Ok(_mapper.Map<AddOperationResultModel>(addOperationResult));
         }
@@ -42,7 +42,7 @@ namespace CalculatorService.Server.WebAPI.Controllers
         [HttpPost("mult")]
         public async Task<ActionResult<MultiplyOperationResultModel>> MultiplyElementsAsync([FromBody] MultiplyOperationModel factors)
         {
-            var multiplyOperationResult = await _calculatorService.MultiplyElementsAsync(_mapper.Map<OperationDTOOperands>(factors));
+            var multiplyOperationResult = await _calculatorService.ExecuteOperation(_mapper.Map<OperationDTOOperands>(factors), ValidOperations.Mult);
 
             return Ok(_mapper.Map<MultiplyOperationResultModel>(multiplyOperationResult));
         }
@@ -55,7 +55,7 @@ namespace CalculatorService.Server.WebAPI.Controllers
         [HttpPost("sub")]
         public async Task<ActionResult<SubOperationResultModel>> SubElementsAsync([FromBody] SubOperationModel subOperators)
         {
-            var subOperationResult = await _calculatorService.SubElementsAsync(_mapper.Map<OperationDTOOperands>(subOperators));
+            var subOperationResult = await _calculatorService.ExecuteOperation(_mapper.Map<OperationDTOOperands>(subOperators), ValidOperations.Diff);
 
             return Ok(_mapper.Map<SubOperationResultModel>(subOperationResult));
         }
@@ -68,7 +68,7 @@ namespace CalculatorService.Server.WebAPI.Controllers
         [HttpPost("sqrt")]
         public async Task<ActionResult<SqrtOperationResultModel>> SqrtElementsAsync([FromBody] SqrtOperationModel sqrtOperators)
         {
-            var sqrtOperationResult = await _calculatorService.SqrtElementsAsync(_mapper.Map<OperationDTOOperands>(sqrtOperators));
+            var sqrtOperationResult = await _calculatorService.ExecuteOperation(_mapper.Map<OperationDTOOperands>(sqrtOperators), ValidOperations.Sqrt);
 
             return Ok(_mapper.Map<SqrtOperationResultModel>(sqrtOperationResult));
         }
@@ -81,7 +81,7 @@ namespace CalculatorService.Server.WebAPI.Controllers
         [HttpPost("div")]
         public async Task<ActionResult<DivOperationResultModel>> DivElementsAsync([FromBody] DivOperationModel sqrtOperators)
         {
-            var divOperationResult = await _calculatorService.DivElementsAsync(_mapper.Map<OperationDTOOperands>(sqrtOperators));
+            var divOperationResult = await _calculatorService.ExecuteOperation(_mapper.Map<OperationDTOOperands>(sqrtOperators), ValidOperations.Div) ;
 
             return Ok(_mapper.Map<DivOperationResultModel>(divOperationResult));
         }

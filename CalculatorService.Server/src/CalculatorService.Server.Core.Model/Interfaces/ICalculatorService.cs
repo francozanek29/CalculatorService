@@ -2,25 +2,17 @@
 
 namespace CalculatorService.Server.Core.Model.Interfaces
 {
-  /// <summary>
-  /// Definition for all the methods that should be used in the controller. We don´t care about the implementation at
-  /// this point.
-  /// </summary>
-  public interface ICalculatorService
-  {
     /// <summary>
-    /// Add two or more operands and retrieve the result.
+    /// Definition for  the methods that should be used in the controller.
     /// </summary>
-    /// <param name="addOperationDTO">An object which contains the elements to be added</param>
-    /// <returns>An object with the result to be shown in the body</returns>
-    Task<OperationResultDTO> AddElementsAsync(OperationDTOOperands operators);
-
-    Task<OperationResultDTO> MultiplyElementsAsync(OperationDTOOperands operators);
-
-    Task<OperationResultDTO> SubElementsAsync(OperationDTOOperands operators);
-
-    Task<OperationResultDTO> SqrtElementsAsync(OperationDTOOperands operators);
-
-    Task<OperationResultDTO> DivElementsAsync(OperationDTOOperands operators);
-  }
+    public interface ICalculatorService
+    {
+        /// <summary>
+        /// Execute the math operation given a list of Operands and the operation.
+        /// </summary>
+        /// <param name="operands"></param>
+        /// <param name="operation"></param>
+        /// <returns>OperationResultDTO in which the result or results of the operation is/are</returns>
+        Task<OperationResultDTO> ExecuteOperation(OperationDTOOperands operands, char operation);       
+    }
 }
