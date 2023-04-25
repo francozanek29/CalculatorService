@@ -19,7 +19,7 @@ namespace CalculatorService.Server.Core.Services.Tests
                 Operands = elementsToBeUsed
             };
 
-            _sut = new CalculatorServices(_mockRepository.Object, _requestContextForNoTracking);
+            _sut = new CalculatorServices(_mockRepository.Object, _requestContextForNoTracking, _mockLogger.Object);
 
             //Act 
             var addOperationResult = await _sut.ExecuteOperation(elementOperationDto, ValidOperations.Sqrt);
@@ -45,7 +45,7 @@ namespace CalculatorService.Server.Core.Services.Tests
                 Operands = new List<int>() { 4 }
             };
 
-            _sut = new CalculatorServices(_mockRepository.Object, _requestContextForTracking);
+            _sut = new CalculatorServices(_mockRepository.Object, _requestContextForTracking, _mockLogger.Object);
 
             //Act 
             var addOperationResult = await _sut.ExecuteOperation(elementOperationDto, ValidOperations.Sqrt);
