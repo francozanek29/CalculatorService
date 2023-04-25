@@ -7,4 +7,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CalculatorService.Core.Models\CalculatorService.Core.Models.csproj" />
+  </ItemGroup>
+
 </Project>

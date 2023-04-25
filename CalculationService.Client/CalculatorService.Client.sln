@@ -3,12 +3,29 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculatoService.Client", "CalculatoService.Client\CalculatoService.Client.csproj", "{AD88EE83-F7C6-42FA-8436-6B68D322D0FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculatorService.Core.Models", "CalculatorService.Core.Models\CalculatorService.Core.Models.csproj", "{68583447-6619-4C6E-A154-E9E85251CBCE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AD88EE83-F7C6-42FA-8436-6B68D322D0FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD88EE83-F7C6-42FA-8436-6B68D322D0FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD88EE83-F7C6-42FA-8436-6B68D322D0FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD88EE83-F7C6-42FA-8436-6B68D322D0FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68583447-6619-4C6E-A154-E9E85251CBCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68583447-6619-4C6E-A154-E9E85251CBCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68583447-6619-4C6E-A154-E9E85251CBCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68583447-6619-4C6E-A154-E9E85251CBCE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BDD06CCD-B0F4-401F-A304-BF1F53D952BE}
 	EndGlobalSection
 EndGlobal
