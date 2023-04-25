@@ -3,7 +3,7 @@ namespace CalculatorService.Server.Core.Services.Tests
   public partial class CalculatorServicesTests
   {
     /// <summary>
-    /// Test cases: When the elements to be added are sent, the result is correct, and not tracking Id is sent,
+    /// Test cases: When the elements to be used in the calculation, the result is correct, and not tracking Id is sent,
     /// the repository is not being called.
     /// </summary>
     /// <param name="elementsToBeAdded"></param>
@@ -11,18 +11,18 @@ namespace CalculatorService.Server.Core.Services.Tests
     /// <returns></returns>
     [Theory]
     [MemberData(nameof(DataSqrt))]
-    public async Task SqrtElementsAsync_WhenElementsAreSentAndNotTrackingIdISent_ReturnsSum(List<int> elementsToBeAdded, int expectedResult)
+    public async Task SqrtElementsAsync_WhenElementsAreSentAndNotTrackingIdISent_ReturnsSum(List<int> elementsToBeUsed, int expectedResult)
     {
       //Arrange
-      var addOperationDto = new OperationDTOOperands()
+      var elementOperationDto = new OperationDTOOperands()
       {
-        Operands = elementsToBeAdded
+        Operands = elementsToBeUsed
       };
 
       _sut = new CalculatorServices(_mockRepository.Object, _requestContextForNoTracking);
 
       //Act 
-      var addOperationResult = await _sut.SqrtElementsAsync(addOperationDto);
+      var addOperationResult = await _sut.SqrtElementsAsync(elementOperationDto);
 
       //Assert
       using (new AssertionScope())
@@ -40,7 +40,7 @@ namespace CalculatorService.Server.Core.Services.Tests
     public async Task SqrtElementsAsync_WhenElementsAreSentAndTrackingIdISent_RepositoryIsCalled()
     {
       //Arrange
-      var addOperationDto = new OperationDTOOperands()
+      var elementOperationDto = new OperationDTOOperands()
       {
         Operands = new List<int>() { 4 }
       };
@@ -48,7 +48,7 @@ namespace CalculatorService.Server.Core.Services.Tests
       _sut = new CalculatorServices(_mockRepository.Object, _requestContextForTracking);
 
       //Act 
-      var addOperationResult = await _sut.SqrtElementsAsync(addOperationDto);
+      var addOperationResult = await _sut.SqrtElementsAsync(elementOperationDto);
 
       //Assert
       _mockRepository.Verify(mr => mr.SaveOperationToRepositoryAsync(

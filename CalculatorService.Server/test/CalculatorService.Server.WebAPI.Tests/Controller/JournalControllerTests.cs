@@ -33,7 +33,7 @@ namespace CalculatorService.Server.WebAPI.Tests.Controller
 
             var testClient = _testApplication.SetupTestRequest();
 
-            var journalModel = new JornalModel()
+            var journalModel = new JournalModel()
             {
                 TrackingId = "someTrackingId"
             };
@@ -43,7 +43,7 @@ namespace CalculatorService.Server.WebAPI.Tests.Controller
             //Act
             var httpResponse = await testClient.HttpClient.PostAsync("/journal/query", bodyToBeSend);
 
-            var response = JsonSerializer.Deserialize<JornalModelResult>(await httpResponse.Content.ReadAsStringAsync());
+            var response = JsonSerializer.Deserialize<JournalModelResult>(await httpResponse.Content.ReadAsStringAsync());
 
             //Arrange
             using(new AssertionScope())
@@ -74,7 +74,7 @@ namespace CalculatorService.Server.WebAPI.Tests.Controller
 
             var httpResponse = await testClient.HttpClient.PostAsync("/calculator/add", bodyToBeSend);
 
-            var journalModel = new JornalModel()
+            var journalModel = new JournalModel()
             {
                 TrackingId = TrackingHeaderValue
             };
@@ -85,7 +85,7 @@ namespace CalculatorService.Server.WebAPI.Tests.Controller
 
             var httpResponseJournal = await testClient.HttpClient.PostAsync("/journal/query", bodyToBeSendJournal);
 
-            var response = JsonSerializer.Deserialize<JornalModelResult>(await httpResponseJournal.Content.ReadAsStringAsync());
+            var response = JsonSerializer.Deserialize<JournalModelResult>(await httpResponseJournal.Content.ReadAsStringAsync());
 
             //Arrange
             using (new AssertionScope())
@@ -122,7 +122,7 @@ namespace CalculatorService.Server.WebAPI.Tests.Controller
             var httpResponseFirstOperation = await testClient.HttpClient.PostAsync("/calculator/add", bodyToBeSend);
             var httpResponseSecondOperation = await testClient.HttpClient.PostAsync("/calculator/add", bodyToBeSend);
 
-            var journalModel = new JornalModel()
+            var journalModel = new JournalModel()
             {
                 TrackingId = TrackingHeaderValue
             };
@@ -133,7 +133,7 @@ namespace CalculatorService.Server.WebAPI.Tests.Controller
 
             var httpResponseJournal = await testClient.HttpClient.PostAsync("/journal/query", bodyToBeSendJournal);
 
-            var response = JsonSerializer.Deserialize<JornalModelResult>(await httpResponseJournal.Content.ReadAsStringAsync());
+            var response = JsonSerializer.Deserialize<JournalModelResult>(await httpResponseJournal.Content.ReadAsStringAsync());
 
             //Arrange
             using (new AssertionScope())
@@ -159,7 +159,7 @@ namespace CalculatorService.Server.WebAPI.Tests.Controller
             //Arrange
             var testClient = _testApplication.SetupTestRequest();
 
-            var journalModel = new JornalModel();
+            var journalModel = new JournalModel();
             StringContent bodyToBeSend = new(JsonSerializer.Serialize(journalModel), Encoding.UTF8, "application/json");
 
             //Act
@@ -183,7 +183,7 @@ namespace CalculatorService.Server.WebAPI.Tests.Controller
             //Arrange
             var testClient = _testApplication.SetupTestRequest();
 
-            var journalModel = new JornalModel()
+            var journalModel = new JournalModel()
             {
                 TrackingId = "someTrackingId"
             };

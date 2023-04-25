@@ -5,39 +5,39 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace CalculatorService.Server.WebAPI.Tests
 {
-  public class TestApplication
-  {
-    private readonly WebApplicationFactory<Program> _webApplicationFactory = new();
-
-    private static void WireExternalDataMocks(IServiceCollection services, TestApplicationDataSourceMocks testingMocks)
+    public class TestApplication
     {
-      RegisterMock(testingMocks.MockRepository.Object);
+        private readonly WebApplicationFactory<Program> _webApplicationFactory = new();
 
-      void RegisterMock<T>(T mock) where T : class
-      {
-        services.RemoveAll<T>();
-        services.AddScoped<T>(_ => mock);
-      }
-    }
-
-    public (HttpClient HttpClient, TestApplicationDataSourceMocks DataSourceMocks) SetupTestRequest(Action<IServiceCollection>? configureTestServicesAction = null)
-    {
-      var testingMocks = new TestApplicationDataSourceMocks();
-
-      HttpClient httpClient = _webApplicationFactory.WithWebHostBuilder(builder => builder.ConfigureTestServices(SetupMocksAndTestServices))
-                               .CreateDefaultClient();
-
-      return (httpClient, testingMocks);
-
-      void SetupMocksAndTestServices(IServiceCollection services)
-      {
-        WireExternalDataMocks(services, testingMocks);
-
-        if (configureTestServicesAction != null)
+        private static void WireExternalDataMocks(IServiceCollection services, TestApplicationDataSourceMocks testingMocks)
         {
-          configureTestServicesAction.Invoke(services);
+            RegisterMock(testingMocks.MockRepository.Object);
+
+            void RegisterMock<T>(T mock) where T : class
+            {
+                services.RemoveAll<T>();
+                services.AddScoped<T>(_ => mock);
+            }
         }
-      }
+
+        public (HttpClient HttpClient, TestApplicationDataSourceMocks DataSourceMocks) SetupTestRequest(Action<IServiceCollection>? configureTestServicesAction = null)
+        {
+            var testingMocks = new TestApplicationDataSourceMocks();
+
+            HttpClient httpClient = _webApplicationFactory.WithWebHostBuilder(builder => builder.ConfigureTestServices(SetupMocksAndTestServices))
+                                     .CreateDefaultClient();
+
+            return (httpClient, testingMocks);
+
+            void SetupMocksAndTestServices(IServiceCollection services)
+            {
+                WireExternalDataMocks(services, testingMocks);
+
+                if (configureTestServicesAction != null)
+                {
+                    configureTestServicesAction.Invoke(services);
+                }
+            }
+        }
     }
-  }
 }

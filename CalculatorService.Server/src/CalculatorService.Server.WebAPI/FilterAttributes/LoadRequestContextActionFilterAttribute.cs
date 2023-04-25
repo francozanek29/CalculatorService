@@ -3,6 +3,10 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace CalculatorService.Server.WebAPI.FilterAttributes
 {
+    /// <summary>
+    /// Action filter that is going to be executed before the controller endpoint in order to populate the 
+    /// tracking id for the request and is going to be used inside the application.
+    /// </summary>
     public class LoadRequestContextActionFilterAttribute : Attribute, IAsyncResourceFilter
     {
         private readonly RequestContext _requestContext;

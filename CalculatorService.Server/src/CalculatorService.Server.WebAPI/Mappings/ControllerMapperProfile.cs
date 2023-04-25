@@ -5,7 +5,8 @@ using CalculatorService.Server.WebAPI.Models;
 namespace CalculatorService.Server.WebAPI.Mappings
 {
     /// <summary>
-    /// Definition for all the custom mapping rules that are going to be used in the controller.
+    /// Definition for all the custom mapping rules that are going to be used between the controller models and the
+    /// application models.
     /// </summary>
     public class ControllerMapperProfile : Profile
     {
@@ -16,14 +17,17 @@ namespace CalculatorService.Server.WebAPI.Mappings
             AddRulesForSubOperation();
             AddRulesForSqrtOperation();
             AddRulesForDivOperation();
-            AddRuleForJornalOperation();
+            AddRuleForJournalOperation();
         }
 
-
-        private void AddRuleForJornalOperation()
+        /// <summary>
+        /// Definition for the mapping rules for the query operation
+        /// </summary>
+        private void AddRuleForJournalOperation()
         {
-            CreateMap<OperationInfoDTO, JornalModelResultItem>();
+            CreateMap<OperationInfoDTO, JournalModelResultItem>();
         }
+
         /// <summary>
         /// Definition for the mapping rules for the Add operation
         /// </summary>
@@ -35,6 +39,9 @@ namespace CalculatorService.Server.WebAPI.Mappings
             CreateMap<OperationResultDTO, AddOperationResultModel>();
         }
 
+        /// <summary>
+        /// Definition for the mapping rules for the Mutliply operation
+        /// </summary>
         private void AddRulesForMultiplyOperation()
         {
             CreateMap<MultiplyOperationModel, OperationDTOOperands>()
@@ -43,6 +50,9 @@ namespace CalculatorService.Server.WebAPI.Mappings
             CreateMap<OperationResultDTO, MultiplyOperationResultModel>();
         }
 
+        /// <summary>
+        /// Definition for the mapping rules for the Sub operation
+        /// </summary>
         private void AddRulesForSubOperation()
         {
             CreateMap<SubOperationModel, OperationDTOOperands>()
@@ -51,6 +61,9 @@ namespace CalculatorService.Server.WebAPI.Mappings
             CreateMap<OperationResultDTO, SubOperationResultModel>();
         }
 
+        /// <summary>
+        /// Definition for the mapping rules for the Div operation
+        /// </summary>
         private void AddRulesForDivOperation()
         {
             CreateMap<DivOperationModel, OperationDTOOperands>()
@@ -67,6 +80,9 @@ namespace CalculatorService.Server.WebAPI.Mappings
                             opt => opt.MapFrom(source => source.ExtraResult));
         }
 
+        /// <summary>
+        /// Definition for the mapping rules for the Sqrt operation
+        /// </summary>
         private void AddRulesForSqrtOperation()
         {
             CreateMap<SqrtOperationModel, OperationDTOOperands>()

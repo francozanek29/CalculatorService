@@ -3,7 +3,7 @@ namespace CalculatorService.Server.Core.Services.Tests
   public partial class CalculatorServicesTests
   {
     /// <summary>
-    /// Test cases: When the elements to be added are sent, the result is correct, and not tracking Id is sent,
+    /// Test cases: When the elements to be divided are sent, the result is correct, and not tracking Id is sent,
     /// the repository is not being called.
     /// </summary>
     /// <param name="elementsToBeDivided"></param>
