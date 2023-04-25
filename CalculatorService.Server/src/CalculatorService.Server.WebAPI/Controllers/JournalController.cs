@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CalculatorService.Server.WebAPI.Controllers
 {
+    /// <summary>
+    /// Controller to handle all the query operation.
+    /// </summary>
     [Route("journal")]
     public class JournalController : Controller
     {
@@ -17,15 +20,19 @@ namespace CalculatorService.Server.WebAPI.Controllers
             _mapper = mapper;
         }
 
-
+        /// <summary>
+        /// Request all operations for a Tracking­Id since the last application restart.
+        /// </summary>
+        /// <param name="jornalModel"></param>
+        /// <returns></returns>
         [HttpPost("query")]
-        public async Task<ActionResult<JornalModelResult>> AddElementsAsync([FromBody] JornalModel jornalModel)
+        public async Task<ActionResult<JournalModelResult>> AddElementsAsync([FromBody] JournalModel jornalModel)
         {
-            var listOperationJornal= await _journalService.GetJornalOperationByIdAsync(jornalModel.TrackingId);
+            var listOperationJornal = await _journalService.GetJornalOperationByIdAsync(jornalModel.TrackingId);
 
-            return Ok(new JornalModelResult()
+            return Ok(new JournalModelResult()
             {
-                Operations = _mapper.Map<IEnumerable<JornalModelResultItem>>(listOperationJornal)
+                Operations = _mapper.Map<IEnumerable<JournalModelResultItem>>(listOperationJornal)
             });
         }
     }

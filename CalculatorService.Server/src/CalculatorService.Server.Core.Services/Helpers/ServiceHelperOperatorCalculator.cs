@@ -2,75 +2,79 @@
 
 namespace CalculatorService.Server.Core.Services.Helpers
 {
-  internal class ServiceHelperOperatorCalculator
-  {
-    private delegate OperationResultDTO OperationToBePerfomed(OperationDTOOperands addOperationDTO);
-    private readonly Dictionary<char, OperationToBePerfomed> _operationsToBePerfomed;
-
-    internal ServiceHelperOperatorCalculator()
+    /// <summary>
+    /// The idea for this class is summarize all the methods that should be use to calculate the different operations
+    /// and get the Result object
+    /// </summary>
+    internal class ServiceHelperOperatorCalculator
     {
-      _operationsToBePerfomed = new Dictionary<char, OperationToBePerfomed>()
-      {
-        {ValidOperations.Sum, new OperationToBePerfomed(AddElements)},
-        {ValidOperations.Mult,new OperationToBePerfomed(MultiplyElements)},
-        {ValidOperations.Diff,new OperationToBePerfomed(SubElements)},
-        {ValidOperations.Sqrt,new OperationToBePerfomed(SqrtElements)},
-        {ValidOperations.Div, new OperationToBePerfomed(DivElements)},
-      };
-    }
+        private delegate OperationResultDTO OperationToBePerfomed(OperationDTOOperands addOperationDTO);
+        private readonly Dictionary<char, OperationToBePerfomed> _operationsToBePerfomed;
 
-    internal OperationResultDTO PerformOperation(OperationDTOOperands operands, char operation)
-    {
-      if (_operationsToBePerfomed.ContainsKey(operation))
-      {
-        return _operationsToBePerfomed[operation](operands);
-      }
-      else
-      {
-        throw new Exception($"Operation Not implemented for operator {operation}");
-      }
-    }
+        internal ServiceHelperOperatorCalculator()
+        {
+            _operationsToBePerfomed = new Dictionary<char, OperationToBePerfomed>()
+            {
+                {ValidOperations.Sum, new OperationToBePerfomed(AddElements)},
+                {ValidOperations.Mult,new OperationToBePerfomed(MultiplyElements)},
+                {ValidOperations.Diff,new OperationToBePerfomed(SubElements)},
+                {ValidOperations.Sqrt,new OperationToBePerfomed(SqrtElements)},
+                {ValidOperations.Div, new OperationToBePerfomed(DivElements)},
+            };
+        }
 
-    private OperationResultDTO AddElements(OperationDTOOperands operands)
-    {
-      return new OperationResultDTO()
-      {
-        Result = operands.Operands.Sum()
-      };
-    }
+        internal OperationResultDTO PerformOperation(OperationDTOOperands operands, char operation)
+        {
+            if (_operationsToBePerfomed.ContainsKey(operation))
+            {
+                return _operationsToBePerfomed[operation](operands);
+            }
+            else
+            {
+                throw new Exception($"Operation Not implemented for operator {operation}");
+            }
+        }
 
-    private OperationResultDTO MultiplyElements(OperationDTOOperands operands)
-    {
-      return new OperationResultDTO()
-      {
-        Result = operands.Operands.Aggregate((x, y) => x * y)
-      };
-    }
+        private OperationResultDTO AddElements(OperationDTOOperands operands)
+        {
+            return new OperationResultDTO()
+            {
+                Result = operands.Operands.Sum()
+            };
+        }
 
-    private OperationResultDTO SubElements(OperationDTOOperands operands)
-    {
-      return new OperationResultDTO()
-      {
-        Result = operands.Operands.Aggregate((x, y) => x - y)
-      };
-    }
+        private OperationResultDTO MultiplyElements(OperationDTOOperands operands)
+        {
+            return new OperationResultDTO()
+            {
+                Result = operands.Operands.Aggregate((x, y) => x * y)
+            };
+        }
 
-    private OperationResultDTO SqrtElements(OperationDTOOperands operands)
-    {
-      return new OperationResultDTO()
-      {
-        Result = (int)Math.Sqrt(operands.Operands.ElementAt(0))
-      };
-    }
+        private OperationResultDTO SubElements(OperationDTOOperands operands)
+        {
+            return new OperationResultDTO()
+            {
+                Result = operands.Operands.Aggregate((x, y) => x - y)
+            };
+        }
 
-    private OperationResultDTOExtension DivElements(OperationDTOOperands operands)
-    {
-      return new OperationResultDTOExtension()
-      {
-        Result = operands.Operands.Aggregate((x, y) => x / y),
-        ExtraResult = operands.Operands.Aggregate((x, y) => x % y)
-      };
-    }
+        private OperationResultDTO SqrtElements(OperationDTOOperands operands)
+        {
+            return new OperationResultDTO()
+            {
+                Result = (int)Math.Sqrt(operands.Operands.ElementAt(0))
+            };
+        }
 
-  }
+        private OperationResultDTOExtension DivElements(OperationDTOOperands operands)
+        {
+            return new OperationResultDTOExtension()
+            {
+                Result = operands.Operands.Aggregate((x, y) => x / y),
+                ExtraResult = operands.Operands.Aggregate((x, y) => x % y)
+            };
+        }
+
+    }
 }

@@ -2,7 +2,11 @@
 
 namespace CalculatorService.Server.WebAPI.Models
 {
-    public record JornalModelResultItem
+    /// <summary>
+    /// Record in charge of handling the information for a Journal Query operation result item in which the information
+    /// is storaged.
+    /// </summary>
+    public record JournalModelResultItem
     {
         [JsonPropertyName("Operation")]
         public string Operation { get; set; }

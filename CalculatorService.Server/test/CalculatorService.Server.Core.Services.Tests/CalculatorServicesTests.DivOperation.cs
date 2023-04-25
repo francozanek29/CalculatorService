@@ -3,7 +3,7 @@ namespace CalculatorService.Server.Core.Services.Tests
   public partial class CalculatorServicesTests
   {
     /// <summary>
-    /// Test cases: When the elements to be added are sent, the result is correct, and not tracking Id is sent,
+    /// Test cases: When the elements to be divided are sent, the result is correct, and not tracking Id is sent,
     /// the repository is not being called.
     /// </summary>
     /// <param name="elementsToBeDivided"></param>
@@ -22,7 +22,7 @@ namespace CalculatorService.Server.Core.Services.Tests
       _sut = new CalculatorServices(_mockRepository.Object, _requestContextForNoTracking);
 
       //Act 
-      var divOperationResult = (OperationResultDTOExtension) await _sut.DivElementsAsync(divOperationDto);
+      var divOperationResult = (OperationResultDTOExtension) await _sut.ExecuteOperation(divOperationDto, ValidOperations.Div);
 
       //Assert
       using (new AssertionScope())
@@ -49,11 +49,11 @@ namespace CalculatorService.Server.Core.Services.Tests
       _sut = new CalculatorServices(_mockRepository.Object, _requestContextForTracking);
 
       //Act 
-      var addOperationResult = await _sut.DivElementsAsync(divOperationDto);
+      var addOperationResult = await _sut.ExecuteOperation(divOperationDto, ValidOperations.Div);
 
       //Assert
       _mockRepository.Verify(mr => mr.SaveOperationToRepositoryAsync(
-        It.Is<OperationDTO>(x => x.Calculation == "2/3=0-Remainder=2" && x.Operation == "Div" && x.TrackingId == _requestContextForTracking.TrackingId)),
+        It.Is<OperationDTO>(x => x.Calculation == "2 / 3 = 0 - Remainder = 2" && x.Operation == "Div" && x.TrackingId == _requestContextForTracking.TrackingId)),
         Times.Once);
     }
 

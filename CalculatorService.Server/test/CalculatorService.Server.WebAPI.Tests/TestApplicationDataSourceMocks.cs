@@ -3,8 +3,8 @@ using Moq;
 
 namespace CalculatorService.Server.WebAPI.Tests
 {
-  public class TestApplicationDataSourceMocks
-  {
-    public Mock<IRepository> MockRepository = new();
-  }
+    public class TestApplicationDataSourceMocks
+    {
+        public Mock<IRepository> MockRepository = new();
+    }
 }

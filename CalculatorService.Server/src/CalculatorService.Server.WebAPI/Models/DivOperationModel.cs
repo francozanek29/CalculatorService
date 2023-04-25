@@ -4,6 +4,9 @@ using CalculatorService.Server.WebAPI.Validations;
 
 namespace CalculatorService.Server.WebAPI.Models
 {
+     /// <summary>
+    /// Record in charge of handling the information for a Add operation result.
+    /// </summary>
     public record DivOperationModel
     {
         [Required]

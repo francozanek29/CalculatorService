@@ -2,10 +2,13 @@
 
 namespace CalculatorService.Server.Repository.Entities
 {
-  public class JournalRepositoryDbContext : DbContext
-  {
-    public JournalRepositoryDbContext(DbContextOptions<JournalRepositoryDbContext> options) : base(options) { }
+    /// <summary>
+    /// Class that would be used to handle the DBContext in the application.
+    /// </summary>
+    public class JournalRepositoryDbContext : DbContext
+    {
+        public JournalRepositoryDbContext(DbContextOptions<JournalRepositoryDbContext> options) : base(options) { }
 
-    public DbSet<OperationEntity> Journeys { get; set; }
-  }
+        public DbSet<OperationEntity> Journeys { get; set; }
+    }
 }
