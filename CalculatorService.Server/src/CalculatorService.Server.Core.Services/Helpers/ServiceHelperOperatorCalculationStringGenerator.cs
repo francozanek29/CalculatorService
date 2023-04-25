@@ -44,7 +44,7 @@ namespace CalculatorService.Server.Core.Services.Helpers
         /// <returns>String value for the calculation property</returns>
         private string SimpleStringGenerator(OperationDTOOperands operators, OperationResultDTO result, char operation)
         {
-            return $"{string.Join(operation, " "+operators.Operands)} = {result.Result}";
+            return $"{string.Join(" "+operation+" ",operators.Operands)} = {result.Result}";
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace CalculatorService.Server.Core.Services.Helpers
         {
             var resultExtended = (OperationResultDTOExtension)result;
 
-            return $"{string.Join(operation, " " + operators.Operands)} = {resultExtended.Result} - Remainder = {resultExtended.ExtraResult}";
+            return $"{string.Join(" " + operation +" ", operators.Operands)} = {resultExtended.Result} - Remainder = {resultExtended.ExtraResult}";
         }
     }
 }

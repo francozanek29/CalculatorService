@@ -3,11 +3,11 @@ using CalculatorService.Server.Core.Model.Interfaces;
 
 namespace CalculatorService.Server.Core.Services
 {
-    public class JornalService : IJournalService
+    public class JournalService : IJournalService
     {
         private readonly IRepository _repository;
 
-        public JornalService(IRepository repository)
+        public JournalService(IRepository repository)
         {
             _repository = repository;
         }

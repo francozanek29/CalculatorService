@@ -53,7 +53,7 @@ namespace CalculatorService.Server.Core.Services.Tests
 
       //Assert
       _mockRepository.Verify(mr => mr.SaveOperationToRepositoryAsync(
-        It.Is<OperationDTO>(x => x.Calculation == "2/3=0-Remainder=2" && x.Operation == "Div" && x.TrackingId == _requestContextForTracking.TrackingId)),
+        It.Is<OperationDTO>(x => x.Calculation == "2 / 3 = 0 - Remainder = 2" && x.Operation == "Div" && x.TrackingId == _requestContextForTracking.TrackingId)),
         Times.Once);
     }
 

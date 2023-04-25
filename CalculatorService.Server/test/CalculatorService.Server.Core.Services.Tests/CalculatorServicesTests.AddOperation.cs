@@ -52,7 +52,7 @@ namespace CalculatorService.Server.Core.Services.Tests
 
       //Assert
       _mockRepository.Verify(mr => mr.SaveOperationToRepositoryAsync(
-        It.Is<OperationDTO>(x => x.Calculation == "2+3=5" && x.Operation == "Sum" && x.TrackingId == _requestContextForTracking.TrackingId)),
+        It.Is<OperationDTO>(x => x.Calculation == "2 + 3 = 5" && x.Operation == "Sum" && x.TrackingId == _requestContextForTracking.TrackingId)),
         Times.Once);
     }
 

@@ -1,13 +1,6 @@
-﻿using CalculatorService.Server.WebAPI.Models;
-using FluentAssertions.Execution;
-using FluentAssertions;
-using System.Net;
-using CalculatorService.Server.Core.Model.Entitites;
-using Moq;
-using Microsoft.Extensions.DependencyInjection;
-using CalculatorService.Server.Core.Model.Interfaces;
+﻿using CalculatorService.Server.Core.Model.Interfaces;
 using CalculatorService.Server.Repository;
-using FluentAssertions.Common;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CalculatorService.Server.WebAPI.Tests.Controller
 {
@@ -18,6 +11,7 @@ namespace CalculatorService.Server.WebAPI.Tests.Controller
         private const string TrackingHeader = "X-Evi-Tracking-Id";
 
         private const string TrackingHeaderValue = "someValue";
+        private const string AnotherTrackingHeaderValue = "anotherValue";
 
         public JournalControllerTests(TestApplication testApplication)
         {
@@ -95,7 +89,7 @@ namespace CalculatorService.Server.WebAPI.Tests.Controller
                 response.Operations.Count().Should().Be(1);
 
                 var firstOperation = response.Operations.FirstOrDefault();
-                firstOperation.Calculation.Should().Be("1+2=3");
+                firstOperation.Calculation.Should().Be("1 + 2 = 3");
                 firstOperation.Operation.Should().Be("Sum");
             }
         }
@@ -117,14 +111,14 @@ namespace CalculatorService.Server.WebAPI.Tests.Controller
 
             StringContent bodyToBeSend = new(JsonSerializer.Serialize(addOperationModel), Encoding.UTF8, "application/json");
 
-            testClient.HttpClient.DefaultRequestHeaders.Add(TrackingHeader, TrackingHeaderValue);
+            testClient.HttpClient.DefaultRequestHeaders.Add(TrackingHeader, AnotherTrackingHeaderValue);
 
             var httpResponseFirstOperation = await testClient.HttpClient.PostAsync("/calculator/add", bodyToBeSend);
             var httpResponseSecondOperation = await testClient.HttpClient.PostAsync("/calculator/add", bodyToBeSend);
 
             var journalModel = new JournalModel()
             {
-                TrackingId = TrackingHeaderValue
+                TrackingId = AnotherTrackingHeaderValue
             };
 
             StringContent bodyToBeSendJournal = new(JsonSerializer.Serialize(journalModel), Encoding.UTF8, "application/json");
@@ -144,11 +138,11 @@ namespace CalculatorService.Server.WebAPI.Tests.Controller
                 response!.Operations.Count().Should().Be(2);
 
                 var firstOperation = response.Operations.FirstOrDefault();
-                firstOperation!.Calculation.Should().Be("1+2=3");
+                firstOperation!.Calculation.Should().Be("1 + 2 = 3");
                 firstOperation!.Operation.Should().Be("Sum");
                 
                 var secondOperation = response.Operations.FirstOrDefault();
-                secondOperation!.Calculation.Should().Be("1+2=3");
+                secondOperation!.Calculation.Should().Be("1 + 2 = 3");
                 secondOperation!.Operation.Should().Be("Sum");
             }
         }

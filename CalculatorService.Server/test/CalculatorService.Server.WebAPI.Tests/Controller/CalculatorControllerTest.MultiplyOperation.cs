@@ -1,11 +1,4 @@
-﻿using CalculatorService.Server.Core.Model.Entitites;
-using FluentAssertions;
-using FluentAssertions.Execution;
-using Moq;
-using System.Diagnostics;
-using System.Net;
-
-namespace CalculatorService.Server.WebAPI.Tests.ControllerTests
+﻿namespace CalculatorService.Server.WebAPI.Tests.ControllerTests
 {
     public partial class CalculatorControllerTest
     {
