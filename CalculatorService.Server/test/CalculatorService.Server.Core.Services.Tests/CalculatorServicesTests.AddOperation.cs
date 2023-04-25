@@ -22,7 +22,7 @@ namespace CalculatorService.Server.Core.Services.Tests
       _sut = new CalculatorServices(_mockRepository.Object, _requestContextForNoTracking);
 
       //Act 
-      var addOperationResult = await _sut.AddElementsAsync(addOperationDto);
+      var addOperationResult = await _sut.ExecuteOperation(addOperationDto, ValidOperations.Sum);
 
       //Assert
       using (new AssertionScope())
@@ -48,7 +48,7 @@ namespace CalculatorService.Server.Core.Services.Tests
       _sut = new CalculatorServices(_mockRepository.Object, _requestContextForTracking);
 
       //Act 
-      var addOperationResult = await _sut.AddElementsAsync(addOperationDto);
+      var addOperationResult = await _sut.ExecuteOperation(addOperationDto, ValidOperations.Sum);
 
       //Assert
       _mockRepository.Verify(mr => mr.SaveOperationToRepositoryAsync(
