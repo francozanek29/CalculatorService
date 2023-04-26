@@ -5,6 +5,6 @@ namespace CalculatorService.Core.Models.Entities.RequestsModels
   public record AddOperationModel
   {
     [JsonPropertyName("Addends")]
-    public IEnumerable<int> Addends { get; set; } = new List<int>();
+    public IEnumerable<int> Operands { get; set; } = new List<int>();
   }
 }
