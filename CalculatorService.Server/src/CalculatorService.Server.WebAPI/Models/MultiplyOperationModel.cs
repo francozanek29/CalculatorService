@@ -1,5 +1,6 @@
 ﻿using CalculatorService.Server.WebAPI.Validations;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace CalculatorService.Server.WebAPI.Models
 {
@@ -10,6 +11,7 @@ namespace CalculatorService.Server.WebAPI.Models
     public record MultiplyOperationModel
     {
         [Required]
+        [JsonPropertyName("Factors")]
         [EnsureMinimumElementsAttribute(2, ErrorMessage = "At least two elements should be provided")]
         public IEnumerable<int> Factors { get; set; } = new List<int>();
     }
