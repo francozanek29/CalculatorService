@@ -1,7 +1,7 @@
 ﻿using CalculatorService.Core.Models.Entities;
 
 var showMenu = true;
-var url = "https://localhost:53971/";
+var url = "https://localhost:7241/";
 
 var addOperationMenu = new AddOperationMenu();
 var divOperationMenu = new DivitionOperationMenu();
