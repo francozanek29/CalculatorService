@@ -43,4 +43,4 @@ The API definition you can find it on this [link](https://app.swaggerhub.com/api
 
 ## How to test the application
 
-There are two different solution (one for each project defined at the top). You need to execute the server and then the client. When that´s working, the Client project has an interactibe menu that guides through the application execution.
+There are two different solution (one for each project defined at the top). You need to execute the server and then the client. When that´s working, the Client project has an interactive menu that guides through the application execution.
